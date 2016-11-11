@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>React Tutorial</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    </head>
+    <body>
+        <div id="div1"></div>
+        <div id="div2"></div>
+        <script type="text/babel">
+            var FirstComponent = React.createClass({
+                render: function() {
+                    return (
+                        <h1>This is our first component</h1>
+                    )
+                }
+            });
+            var SecondComponent = React.createClass({
+                // do some checking
+                propTypes: {
+                    name: React.PropTypes.string,
+                    location: React.PropTypes.string.isRequired
+                },
+                // set default values
+                getDefaultProps: function() {
+                    return {
+                        name: 'Steve'
+                    }
+                },
+                getInitialState: function() {
+                    return {
+                        age: '48'
+                    }
+                },
+                render: function() {
+                    let name = this.props.name;
+                    let location = this.props.location;
+                    return (
+                        <div>
+                            <p>{name} is my name.</p>
+                            <p>I live at {location}</p>
+                            <div>
+                                Guess my age:&nbsp;
+                                <input type="text" onChange={this.ageChanged} />
+                                <button onClick={this.resetAge}>Reset Age</button>
+                                <p>My age is {this.state.age}?</p>
+                            </div>
+                        </div>
+                    )
+                },
+                ageChanged: function(event) {
+                    this.setState({
+                        age: event.target.value
+                    })
+                },
+                resetAge: function(event) {
+                    this.setState({
+                        age: 48
+                    })
+                }
+            });
+            ReactDOM.render(
+                <FirstComponent />, 
+                document.getElementById('div1')
+            );
+            ReactDOM.render(
+                <SecondComponent location="Broomfield" />,
+                document.getElementById('div2')
+            );
+
+            //ReactDOM.render(
+                //<h1>Hello world, this is written in JSX</h1>,
+                //document.getElementById('app')
+            //);
+            //ReactDOM.render(
+               // React.createElement(
+                    //'h1',
+                    //null,
+                    //'Hello World'
+                //),
+                //document.getElementById('app')
+            //);
+        </script>
+    </body>
+</html>
+

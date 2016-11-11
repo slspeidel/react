@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>React Tutorial</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script type="text/babel">
+            
+            var LifecycleComponent = React.createClass({
+                 increment: function() {
+                    this.setState({
+                        count: this.state.count + 1
+                    })
+                },
+
+                // 1 called ONCE
+                // CALLED BEFORE RENDER
+                // HAPPENS WHEN CLASS IS CREATED!!!
+                getDefaultProps: function() {
+                    console.log("Getting default properties");
+                },
+                // 2 called ONCE
+                // CALLED BEFORE RENDER
+                 getInitialState: function() {
+                    console.log("Getting initial state")
+                    return({
+                        count: 0
+                    });
+                },
+                // 3 CALLED ONCE BEFORE RENDER
+                componentWillMount: function() {
+                    console.log("Component is mounting");
+                },
+                
+                // 4 CALLED WHENEVER THERE ARE CHANGES
+                // Component is Rendered
+                render: function() {
+                    console.log("Component is rendering");
+                    return (
+                        <button onClick={this.increment}>{this.state.count}</button>
+                    );
+                },
+                // 5 CALLED ONCE After RENDER
+                componentDidMount: function() {
+                    console.log("Component is mounted and rendered");
+                    //console.log(ReactDOM.findDOMNode(this));
+                    this.interval = setInterval(this.increment, 1000);
+                },
+                componentWillUnmount: function() {
+                    console.log("Component Unmounted")
+                    clearInterval(this.interval);
+                }
+            });
+
+            var LifecycleContainer = React.createClass({
+                mount: function() {
+                    ReactDOM.render(
+                        <LifecycleComponent />,
+                        document.getElementById('mountHere')
+                    );
+                },
+                unmount: function() {
+                    ReactDOM.unmountComponentAtNode(document.getElementById('mountHere'));
+                },
+                render: function() {
+                    return (
+                        <div>
+                            <button onClick={this.mount}>Mount</button>
+                            <button onClick={this.unmount}>Unmount</button>
+                            <div id="mountHere"></div>
+                        </div>
+                    )
+                }
+            });
+
+            ReactDOM.render(
+                <LifecycleContainer />,
+                document.getElementById('app')
+            );
+        </script>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>React Tutorial</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../challengestyle.css" />
+    </head>
+    <body>
+        <div id="stateRow"></div>
+
+        <script type="text/babel">
+            var StateComp = React.createClass({
+                getDefaultProps: function() {
+                    return {
+                        blueValue: 1,
+                        greenValue: 5,
+                        purpleValue: 10,
+                        text: 'Add'
+                    }
+                },
+                getInitialState: function() {
+                    return {
+                        total: 0
+                    }
+                },
+                render: function() {
+                    return (
+                        <div className="centerMain">
+                            <h1>Count: {this.state.total}</h1>
+                            <Button style="blue" text={`${this.props.text} ${this.props.blueValue}`} value={this.props.blueValue} clickHandler={this.buttonClick.bind(this, this.props.blueValue)} />
+                            <Button style="green" text= {`${this.props.text} ${this.props.greenValue}`} value={this.props.greenValue} clickHandler={this.buttonClick.bind(this, this.props.greenValue)} />
+                            <Button style="purple" text={`${this.props.text} ${this.props.purpleValue}`} value={this.props.purpleValue} clickHandler={this.buttonClick.bind(this, this.props.purpleValue)} />
+                            <Button text="Alert!" clickHandler={this.alert} />
+                        </div>
+                    )
+                },                
+                buttonClick: function(value) {
+                    this.setState({
+                        total: this.state.total + value
+                    })
+                },
+                alert: function() {
+                    alert("Button Clicked")
+                }
+            });
+
+            var Button = function(props) {
+                return (
+                    <button className={props.style} value={props.value} onClick={props.clickHandler}>{props.text}</button>
+                )
+            };
+
+            ReactDOM.render(<StateComp  />, document.getElementById('stateRow'));
+            
+        </script>
+    </body>
+</html>
