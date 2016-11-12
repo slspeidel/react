@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>React Tutorial</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="challengestyle.css" />
+    </head>
+    <body>
+        <div id="stateRow"></div>
+
+        <script type="text/babel">
+           class ChallengeComp extends React.Component {
+               constructor(props) {
+                   super(props);
+                   this.state = { total: 0 };
+                   this.buttonClick = this.buttonClick.bind(this);
+                   
+               }
+               
+                render() {
+                    return (
+                        <div className="centerMain">
+                            <h1>Count: {this.state.total}</h1>
+                            <Button style="blue" text={this.props.text + this.props.blueValue} value={this.props.blueValue} clickHandler={() => this.buttonClick(this.props.blueValue)} />
+                            <Button style="green" text={this.props.text + this.props.greenValue} value={this.props.greenValue} clickHandler={() => this.buttonClick(this.props.greenValue)} />
+                            <Button style="purple" text={this.props.text + this.props.purpleValue} value={this.props.purpleValue} clickHandler={() => this.buttonClick(this.props.purpleValue)} />
+                            
+                        </div>
+                    )
+                }
+
+                buttonClick(value) {
+                    this.setState({
+                        total: this.state.total + value
+                    })
+                }
+
+            }
+
+            ChallengeComp.defaultProps = {
+                blueValue: 100,
+                greenValue: 1000,
+                purpleValue: 10000,
+                text: 'Add '
+            }
+
+            const Button = (props) => {
+                return (
+                    <button className={props.style} value={props.value} onClick={props.clickHandler}>{props.text}</button>
+                )
+            }
+
+            Button.propTypes = {
+                text: React.PropTypes.string,
+                style: React.PropTypes.string,
+                value: React.PropTypes.number,
+                clickHandler: React.PropTypes.func.isRequired
+            }
+
+            ReactDOM.render(<ChallengeComp  />, document.getElementById('stateRow'));
+            
+        </script>
+    </body>
+</html>
